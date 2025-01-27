@@ -7,9 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
         :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --accent-color: #00cec9;
+            --primary-color: #2d3436;
+            --secondary-color: #636e72;
+            --accent-color: #ff9f43;
             --text-color: #2d3436;
             --background-color: #ffffff;
         }
@@ -20,6 +20,15 @@
             box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        /* Animations */
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -34,38 +43,50 @@
 
         @keyframes slideIn {
             from {
-                transform: translateX(-100px);
+                transform: translateY(20px);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-        @keyframes glowText {
-            0%, 100% { text-shadow: 0 0 10px rgba(108, 92, 231, 0.5); }
-            50% { text-shadow: 0 0 20px rgba(108, 92, 231, 0.8); }
+        /* Language Switch */
+        .language-switch {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            overflow-x: hidden;
+        .language-switch:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            background: linear-gradient(-45deg, #6c5ce7, #00cec9, #a29bfe, #81ecec);
+            background: linear-gradient(-45deg, #2d3436, #ff9f43, #636e72, #ffa502);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             padding: 2rem;
+            position: relative;
         }
 
         .hero-content {
@@ -76,22 +97,24 @@
             max-width: 1200px;
             z-index: 1;
             color: white;
+            animation: slideIn 1s ease;
         }
 
         .profile-pic {
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: 4px solid white;
+            border: 4px solid rgba(255, 255, 255, 0.8);
             margin-bottom: 2rem;
             animation: float 6s ease-in-out infinite;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            object-fit: cover;
         }
 
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: glowText 3s ease-in-out infinite;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .hero p {
@@ -111,16 +134,20 @@
             color: white;
             font-size: 1.5rem;
             transition: transform 0.3s ease;
+            opacity: 0.8;
         }
 
         .social-link:hover {
             transform: scale(1.2) rotate(10deg);
+            opacity: 1;
         }
 
+        /* About Section */
         .section {
             padding: 6rem 2rem;
             position: relative;
             overflow: hidden;
+            background: white;
         }
 
         .about-me {
@@ -130,7 +157,7 @@
             max-width: 1200px;
             margin: 0 auto;
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(20px);
             transition: all 0.6s ease;
         }
 
@@ -143,10 +170,23 @@
             font-size: 2.5rem;
             margin-bottom: 2rem;
             color: var(--primary-color);
+            position: relative;
+        }
+
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
         }
 
         .about-list {
             list-style: none;
+            margin-top: 2rem;
         }
 
         .about-list li {
@@ -162,112 +202,75 @@
             color: var(--accent-color);
         }
 
+        /* Interest Cards */
         .interests {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-top: 2rem;
         }
 
         .interest-card {
             background: white;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interest-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: left;
             transition: transform 0.3s ease;
         }
 
+        .interest-card:hover::before {
+            transform: scaleX(1);
+        }
+
         .interest-card:hover {
-            transform: translateY(-10px) rotate(3deg);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 159, 67, 0.2);
         }
 
         .interest-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .projects {
-            background: #f8f9fa;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            color: var(--accent-color);
             transition: transform 0.3s ease;
         }
 
-        .project-card:hover .project-image img {
-            transform: scale(1.1);
+        .interest-card:hover .interest-icon {
+            transform: scale(1.2) rotate(10deg);
         }
 
-        .project-content {
-            padding: 2rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .tech-tag {
-            background: rgba(108, 92, 231, 0.1);
-            color: var(--primary-color);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .fun-facts {
-            padding: 4rem 2rem;
+        /* Projects Section */
+        .projects {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
+            padding: 6rem 2rem;
+        }
+
+        .projects h2 {
             text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: white;
         }
 
         .facts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -280,39 +283,18 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .fact-card:hover {
-            transform: scale(1.05) translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .fact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .fact-card:hover::before {
-            transform: translateX(100%);
+            transform: translateY(-5px);
+            background: rgba(255, 159, 67, 0.1);
+            border-color: var(--accent-color);
         }
 
         .fact-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .fact-card:hover .fact-icon {
-            transform: scale(1.2) rotate(10deg);
         }
 
         .tech-tags {
@@ -323,16 +305,161 @@
         }
 
         .tech-tags span {
-            background: rgba(255,255,255,0.15);
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
             font-size: 0.8rem;
             transition: all 0.3s ease;
         }
 
-        .tech-tags span:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
+        .fact-card:hover .tech-tags span {
+            background: rgba(255, 159, 67, 0.2);
+        }
+
+        /* Project Expansion */
+        .project-expanded {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .project-expanded.active {
+            padding: 2rem;
+            max-height: 1000px;
+            opacity: 1;
+            margin-top: 2rem;
+        }
+
+        .project-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .project-info {
+            color: white;
+        }
+
+        .project-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .project-info ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .project-info li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .project-info li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 159, 67, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: rgba(255, 159, 67, 0.2);
+            transform: translateX(5px);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-image.active {
+            opacity: 1;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+
+        .gallery-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-dot.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .gallery-regions {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-gallery:hover .gallery-regions {
+            opacity: 0.1;
+        }
+
+        .gallery-region {
+            border: 1px solid white;
         }
 
         @media (max-width: 768px) {
@@ -344,20 +471,41 @@
                 grid-template-columns: 1fr;
             }
 
+            .interests {
+                grid-template-columns: 1fr;
+            }
+
+            .project-content {
+                grid-template-columns: 1fr;
+            }
+
             .profile-pic {
                 width: 150px;
                 height: 150px;
+            }
+
+            .language-switch {
+                top: 1rem;
+                right: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switch -->
+    <div class="language-switch">
+        <span class="flag">🇬🇧</span>
+        <span>EN</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <img src="/api/placeholder/200/200" alt="Profile Picture" class="profile-pic">
-            <h1>Hey, I'm Aron! 👋</h1>
+            <h1>Hey, I'm [Your Name]! 👋</h1>
             <p>Computer Science Master's student by day, tinkerer by night. 
-               I love building robots, processing multimedia, and creating cool stuff with code!</p>
+               I love building robots, writing code, and working with embedded systems!</p>
             <div class="social-links">
                 <a href="#" class="social-link"><i class="fab fa-github"></i></a>
                 <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
@@ -367,6 +515,7 @@
         </div>
     </section>
 
+    <!-- About Section -->
     <section class="section">
         <div class="about-me">
             <div class="about-content">
@@ -375,7 +524,7 @@
                 <ul class="about-list">
                     <li>Experimenting with new programming languages</li>
                     <li>Building (or breaking) electronics</li>
-                    <li>Creating random video edits</li>
+                    <li>Working on robotics projects</li>
                     <li>Trying to automate everything in sight</li>
                 </ul>
             </div>
@@ -401,20 +550,15 @@
                     <h3>Embedded</h3>
                     <p>ARM architecture</p>
                 </div>
-                <div class="interest-card">
-                    <div class="interest-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h3>Multimedia</h3>
-                    <p>Video processing</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <section class="fun-facts">
+    <!-- Projects Section -->
+    <section class="projects">
+        <h2>Featured Projects</h2>
         <div class="facts-grid">
-            <div class="fact-card">
+            <div class="fact-card" data-project="rccar">
                 <div class="fact-icon">🚗</div>
                 <h3>RC Car Project</h3>
                 <p>Semi-autonomous ARM-based vehicle with custom PCB design</p>
@@ -424,7 +568,8 @@
                     <span>PCB</span>
                 </div>
             </div>
-            <div class="fact-card">
+
+            <div class="fact-card" data-project="brainrot">
                 <div class="fact-icon">🎥</div>
                 <h3>BrainRot Generator</h3>
                 <p>Automated video editing with ML-powered subtitles</p>
@@ -434,7 +579,8 @@
                     <span>FFmpeg</span>
                 </div>
             </div>
-            <div class="fact-card">
+
+            <div class="fact-card" data-project="heatmap">
                 <div class="fact-icon">🗺️</div>
                 <h3>TCX Heatmap</h3>
                 <p>Professional GUI for visualizing geographic data</p>
@@ -444,25 +590,168 @@
                     <span>GIS</span>
                 </div>
             </div>
-            <div class="fact-card">
-                <div class="fact-icon">🔬</div>
-                <h3>Coming Soon...</h3>
-                <p>Always working on something new!</p>
-                <div class="tech-tags">
-                    <span>???</span>
+
+            <!-- Project Expansions -->
+            <div class="project-expanded" id="rccar-expanded">
+                <div class="project-content">
+                    <div class="project-info">
+                        <h3>RC Car Project</h3>
+                        <p>A sophisticated remote-controlled vehicle built from the ground up, featuring:</p>
+                        <ul>
+                            <li>Custom-designed PCB with ARM microcontroller</li>
+                            <li>Real-time telemetry and sensor feedback</li>
+                            <li>Advanced motor control algorithms</li>
+                            <li>Wireless communication protocol</li>
+                        </ul>
+                        <a href="https://github.com/yourusername/rccar" class="github-link">
+                            <i class="fab fa-github"></i>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="gallery-container">
+                            <img src="/api/placeholder/800/450" alt="RC Car - Full View" class="gallery-image active">
+                            <img src="/api/placeholder/800/450" alt="RC Car - PCB" class="gallery-image">
+                            <img src="/api/placeholder/800/450" alt="RC Car - Assembly" class="gallery-image">
+                        </div>
+                        <div class="gallery-regions"></div>
+                        <div class="gallery-nav">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-expanded" id="brainrot-expanded">
+                <div class="project-content">
+                    <div class="project-info">
+                        <h3>BrainRot Generator</h3>
+                        <p>An automated video editing tool that transforms raw footage into engaging content:</p>
+                        <ul>
+                            <li>ML-powered speech recognition for subtitles</li>
+                            <li>Automated scene detection and timing</li>
+                            <li>Custom effects and transitions library</li>
+                            <li>Batch processing capabilities</li>
+                        </ul>
+                        <a href="https://github.com/yourusername/brainrot" class="github-link">
+                            <i class="fab fa-github"></i>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="gallery-container">
+                            <img src="/api/placeholder/800/450" alt="BrainRot - Interface" class="gallery-image active">
+                            <img src="/api/placeholder/800/450" alt="BrainRot - Processing" class="gallery-image">
+                            <img src="/api/placeholder/800/450" alt="BrainRot - Output" class="gallery-image">
+                        </div>
+                        <div class="gallery-regions"></div>
+                        <div class="gallery-nav">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-expanded" id="heatmap-expanded">
+                <div class="project-content">
+                    <div class="project-info">
+                        <h3>TCX Heatmap</h3>
+                        <p>A professional-grade application for visualizing and analyzing geographic data:</p>
+                        <ul>
+                            <li>Interactive map visualization</li>
+                            <li>Custom data import/export formats</li>
+                            <li>Advanced filtering and analysis tools</li>
+                            <li>Performance optimized for large datasets</li>
+                        </ul>
+                        <a href="https://github.com/yourusername/tcx-heatmap" class="github-link">
+                            <i class="fab fa-github"></i>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <div class="image-gallery">
+                        <div class="gallery-container">
+                            <img src="/api/placeholder/800/450" alt="Heatmap - Overview" class="gallery-image active">
+                            <img src="/api/placeholder/800/450" alt="Heatmap - Analysis" class="gallery-image">
+                            <img src="/api/placeholder/800/450" alt="Heatmap - Data" class="gallery-image">
+                        </div>
+                        <div class="gallery-regions"></div>
+                        <div class="gallery-nav">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section projects">
-        <div class="project-grid">
-            <!-- Project cards with same content as before, but with enhanced animations -->
-            <!-- ... -->
-        </div>
-    </section>
-
     <script>
+        // Language switch functionality
+        const languageSwitch = document.querySelector('.language-switch');
+        languageSwitch.addEventListener('click', () => {
+            const currentFlag = languageSwitch.querySelector('.flag').textContent;
+            const currentLang = languageSwitch.querySelector('span:not(.flag)').textContent;
+            
+            if (currentFlag === '🇬🇧') {
+                languageSwitch.querySelector('.flag').textContent = '🇸🇪';
+                languageSwitch.querySelector('span:not(.flag)').textContent = 'SE';
+            } else {
+                languageSwitch.querySelector('.flag').textContent = '🇬🇧';
+                languageSwitch.querySelector('span:not(.flag)').textContent = 'EN';
+            }
+        });
+
+        // Project expansion
+        const projectCards = document.querySelectorAll('.fact-card');
+        
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.dataset.project;
+                const expandedSection = document.getElementById(`${projectId}-expanded`);
+                
+                // Toggle active state
+                const isActive = expandedSection.classList.contains('active');
+                
+                // Close all expanded sections
+                document.querySelectorAll('.project-expanded').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Open clicked section if it wasn't already open
+                if (!isActive) {
+                    expandedSection.classList.add('active');
+                    // Smooth scroll to expanded content
+                    expandedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Image gallery
+        document.querySelectorAll('.image-gallery').forEach(gallery => {
+            const container = gallery.querySelector('.gallery-container');
+            const images = gallery.querySelectorAll('.gallery-image');
+            const dots = gallery.querySelectorAll('.gallery-dot');
+            const regions = gallery.querySelector('.gallery-regions');
+
+            // Create regions for mouse interaction
+            for (let i = 0; i < 3; i++) {
+                const region = document.createElement('div');
+                region.className = 'gallery-region';
+                region.addEventListener('mouseenter', () => {
+                    images.forEach(img => img.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    images[i].classList.add('active');
+                    dots[i].classList.add('active');
+                });
+                regions.appendChild(region);
+            }
+        });
+
         // Intersection Observer for fade-in animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -474,7 +763,7 @@
             threshold: 0.1
         });
 
-        document.querySelectorAll('.about-me, .project-card').forEach((el) => {
+        document.querySelectorAll('.about-me, .fact-card').forEach((el) => {
             observer.observe(el);
         });
     </script>
